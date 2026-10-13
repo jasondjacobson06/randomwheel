@@ -1,40 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/webstorm-icon-logo.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WS playground</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8">
+  <title>Weighted Spin Wheel</title>
+  <style>
+    body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #f0f2f5; }
+    .wheel-container { position: relative; margin: 20px; }
+    .pointer {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 15px solid transparent; border-right: 15px solid transparent;
+      border-top: 30px solid #ff4757; z-index: 10;
+    }
+    canvas { border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    .controls { display: flex; gap: 15px; margin-top: 20px; background: white; padding: 15px; border-radius: 8px; }
+    .control-group { display: flex; flex-direction: column; align-items: center; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; background: #2ed573; border: none; color: white; border-radius: 5px; font-weight: bold; }
+    button:disabled { background: #ccc; }
+  </style>
 </head>
 <body>
-<header class="logo">
-  <a href="https://www.jetbrains.com/webstorm/">
-    <img src="/webstorm-logo.svg" alt="WebStorm logo" width="344"
-         height="90">
-  </a>
-</header>
-<main id="app">
-  <h1 class="title">
-    Thank you for trying it out. <br /> Your first project is up and running
-    now.
-  </h1>
-  <section class="counter">
-    <div class="counter-info">
-      <p class="counter-text">Counter is</p>
-      <p class="counter-value" id="counter-value"></p>
-    </div>
-    <div class="counter-interaction">
-      <button id="increaseByOne" type="button">+1</button>
-      <button id="increaseByTwo" type="button">+2</button>
-      <button id="decreaseByOne" type="button">-1</button>
-      <button id="decreaseByTwo" type="button">-2</button>
-    </div>
-  </section>
-</main>
-<footer class="technologies">
-  <img src="/technologies.svg" alt="List of supported technologies">
-</footer>
-<script type="module" src="/src/main.ts"></script>
+
+<h1>Weighted Spin Wheel</h1>
+
+<div class="wheel-container">
+  <div class="pointer"></div>
+  <canvas id="wheelCanvas" width="400" height="400"></canvas>
+</div>
+
+<button id="spinBtn">SPIN!</button>
+
+<!-- Weight Controls -->
+<!-- HTML Form to add new slices dynamically -->
+<div style="margin-top: 20px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+  <h3>Add New Slice</h3>
+  <input type="text" id="newLabel" placeholder="Slice Name (e.g., Prize E)" style="padding: 5px;">
+  <input type="number" id="newWeight" placeholder="Weight" value="1" min="0.1" step="0.5" style="width: 60px; padding: 5px;">
+  <input type="color" id="newColor" value="#9b59b6" style="padding: 0; border: none; cursor: pointer; vertical-align: middle;">
+  <button id="addSliceBtn" style="padding: 5px 10px; background: #1e90ff; font-size: 14px;">Add</button>
+</div>
+
+<!-- Container where active slices and weights show up -->
+<h3>Active Slices & Weights</h3>
+<div class="controls" id="controlsPanel"></div>
+
+
+<script src="app.js" defer></script>
 </body>
 </html>
+
